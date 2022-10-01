@@ -1,25 +1,58 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react'; //Shortcut -- imrs
+import Navbar from './components/Navbar';
+import TextForm from './components/TextForm';
+import Alert from './components/alert';
+import About from './components/About'
+import { BrowserRouter, Route, Routes } from "react-router-dom"; //https://reactrouter.com/en/v6.3.0/getting-started/tutorial
 
+// let name = "Om";
 function App() {
+  const [mode, setMode] = useState('light');
+  const [alert, setAlert] = useState(null)
+  
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 2000);
+  }
+
+  const toggleMode = () => {
+    if (mode === 'dark') {
+      setMode('light');
+      document.body.style.backgroundColor = 'white';
+      showAlert(" Light Mode has been enabled", "success"); //We will set value in showAlert and it will pass values to setAlert as mentioned in cross function and then those values will be used in props.alert.type and props.alert.message in alert.js
+    }
+    else {
+      setMode('dark');
+      document.body.style.backgroundColor = '#757b82';
+      showAlert(" Dark Mode has been enabled", "success");
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <BrowserRouter> {/* To deploy we commented all routing things */}
+
+      {/* <h1>Hello {name}</h1> */}
+      <Navbar title="Text Utils" mode={mode} toggleMode={toggleMode} aboutText="About Us" />
+      <Alert alert={alert} />
+      <div className="container my-3">
+        {/* <TextForm textHeading="Text-Analyzer" mode={mode} showAlert={showAlert} /> */}
+        {/* <About/> */}
+
+        <Routes>
+          <Route exact path="/" element={<TextForm textHeading="Text-Analyzer" mode={mode} showAlert={showAlert}/>}/>
+          <Route exact path="/about" element={<About mode={mode}/>}/>
+        </Routes>
+
+      </div>
+      </BrowserRouter>
+    </>
   );
 }
-
 export default App;
+// Deployed using https://create-react-app.dev/docs/deployment/ Open site and search Github and then do as said...Website https://omsingh228.github.io/Text-Utils/
