@@ -16,7 +16,7 @@ export default function TextForm(props) {
     //for word count
     let a=event.target.value.split(/[ ]+/);
     let b=a.join(" ");
-    let c=b.split(" ");
+    let c=b.split(/\s+/);
     if(event.target.value === ""){
       setWordCount(0);
     }
@@ -28,7 +28,7 @@ export default function TextForm(props) {
     }
 
     //for char count
-    setCharCount(event.target.value.replaceAll(' ', '').length);
+    setCharCount(event.target.value.replaceAll(" ", '').length);
   }
   const handleUpClick = () => {
     //This will be fired when Convert to uppercase button will be clicked as we have written this function in onClick  of button
@@ -74,7 +74,7 @@ export default function TextForm(props) {
     props.showAlert("Converted to Capitalise Case", "success");
   };
   return (
-    <div style={{ color: props.mode === 'light' ? '#757b82' : 'white' }}>
+    <div style={{ color: props.mode === 'light' ? 'black' : 'white' }}>
       <div className="form-group">
         <h3>{props.textHeading}</h3>
         <textarea className="form-control" value={text} placeholder="Enter Your Text" style={{ backgroundColor: props.mode === 'light' ? 'white' : 'rgb(67 68 71)', color: props.mode === 'light' ? '#757b82' : 'white' }} onChange={handleOnChange} id="exampleFormControlTextarea1" rows="8" ></textarea>
@@ -102,11 +102,11 @@ export default function TextForm(props) {
       </button>
 
 
-      <div className="my3" style={{ color: props.mode === 'light' ? '#757b82' : 'white' }}>
+      <div className="my3" style={{ color: props.mode === 'light' ? 'black' : 'white' }}>
         <h3>Your Input Summary:</h3>
         <p>
           {/* Words: {text.split(" ").length} & Characters: {text.length} */}
-          Words: {wordCount} <br/> Characters without space: {charCount} <br /> Characters without space: {text.length}
+          Words: {wordCount} <br/> Characters with space: {charCount} <br /> Characters without space: {text.length}
         </p>
         <p>Average Time to Read: {text.length > 0? 0.008 * text.split(" ").length: 0} Minutes</p>
         <h3>Preview:</h3>

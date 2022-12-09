@@ -20,8 +20,16 @@ function App() {
       setAlert(null)
     }, 2000);
   }
-
-  const toggleMode = () => {
+  const removeBodyClass=()=>{
+    document.body.classList.remove('bg-success')
+    document.body.classList.remove('bg-danger')
+  }
+  const colorMode = (cls)=>{
+    removeBodyClass();
+    document.body.classList.add('bg-'+cls);
+  }
+  const toggleMode = (cls) => {
+    removeBodyClass();
     if (mode === 'dark') {
       setMode('light');
       document.body.style.backgroundColor = 'white';
@@ -38,7 +46,7 @@ function App() {
     <BrowserRouter> {/* To deploy we commented all routing things */}
 
       {/* <h1>Hello {name}</h1> */}
-      <Navbar title="Text Utils" mode={mode} toggleMode={toggleMode} aboutText="About Us" />
+      <Navbar title="Text Utils" mode={mode} toggleMode={toggleMode} colorMode={colorMode} showAlert={showAlert} aboutText="About Us" />
       <Alert alert={alert} />
       <div className="container my-3">
         {/* <TextForm textHeading="Text-Analyzer" mode={mode} showAlert={showAlert} /> */}
